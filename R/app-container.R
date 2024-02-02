@@ -26,7 +26,6 @@ setup_shinylive_pkgdown <- function() {
       sep = "/"
     )
     unlink(to_remove, recursive = TRUE)
-    # TO DO: copy CSS file
     message(
       sprintf(
         "shinylive assets for pkgdown created in %s",
@@ -90,6 +89,12 @@ create_shinylive_container <- function(
       tags$script(
         src = "../shinylive-assets/shinylive/load-shinylive-sw.js",
         type = "module"
+      )
+    ),
+    singleton(
+      tags$link(
+        href = "../shinylive-assets/shinylive/shinylive.css",
+        rel = "stylesheet"
       )
     ),
     tags$script(
