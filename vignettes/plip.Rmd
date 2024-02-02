@@ -1,0 +1,27 @@
+---
+title: "plip"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plip}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE, echo=FALSE}
+library(shinylivePkgdown)
+```
+
+```{r, echo=FALSE, message=FALSE}
+create_shinylive_container("inst/second-app", "plip", "viewer", height = "800px")
+```
+
+```{r, echo=FALSE, message=FALSE}
+create_shinylive_container("inst/bs4Dash", "plap", "viewer", height = "800px")
+```
