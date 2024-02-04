@@ -6,12 +6,37 @@
 #' @import shinylive
 setup_shinylive_pkgdown <- function() {
   if (!file.exists("./_pkgdown.yml")) {
-    stop("Please call usethis::use_pkgdown to set up your package website.")
+    stop("Please call usethis::use_pkgdown() to set up your package website.")
   }
   if (!dir.exists("./docs")) {
     stop("Please run pkgdown::build_site() at least once.")
   }
 
+  # SW script setup
+  sw_code <- readLines(
+    system.file(
+      "assets/js/load-shinylive-sw.js",
+      package = "shinylivePkgdown"
+    )
+  )
+
+  js_sw_path <- "pkgdown/extra.js"
+
+  if (!dir.exists("pkgdown")) {
+    dir.create("pkgdown")
+  }
+
+  if (file.exists(js_sw_path)) {
+    write(sw_code, js_sw_path, append = TRUE)
+  } else {
+    file.create(js_sw_path)
+    write(
+      sw_code,
+      js_sw_path
+    )
+  }
+
+  # Other assets
   assets_path <- "./docs/shinylive-assets"
   if (!dir.exists(assets_path)) {
     dir.create(assets_path)
@@ -84,13 +109,6 @@ create_shinylive_container <- function(
   json_path <- sprintf("../shinylive-assets/%s/app.json", app_name)
 
   tagList(
-    # Load SW only once ...
-    singleton(
-      tags$script(
-        src = "../shinylive-assets/shinylive/load-shinylive-sw.js",
-        type = "module"
-      )
-    ),
     singleton(
       tags$link(
         href = "../shinylive-assets/shinylive/shinylive.css",
